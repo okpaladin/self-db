@@ -12,16 +12,16 @@ import java.util.*;
 public class Record implements Serializable {
     private static final long serialVersionUID = 427684513600884082L;
 
-    private Map<String, Object> columns;
+    private  Map<String, Object> columns;
 
 
-    void setColumnsMap(Map<String, Object> columns) {
-        this.columns = columns;
+    void setColumnsMap(Map<String, Object> mapColumns) {
+        this.columns = mapColumns;
     }
 
     public Map<String, Object> getColumns() {
 
-        if(columns==null||!columns.isEmpty())
+        if(columns==null||columns.isEmpty())
             this.columns =  new LinkedHashMap<String, Object>();
 
         return this.columns;

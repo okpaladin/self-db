@@ -49,6 +49,7 @@ public class InitDataSource {
     private DruidDataSource initSource() {
         DruidDataSource dds = new DruidDataSource() ;
 
+//        dds.setDriverClassName("com.mysql.jdbc.Driver");
         dds.setUrl(p.getProperty("dbSelf.bi.jdbc.url"));
         dds.setUsername(p.getProperty("dbSelf.bi.jdbc.user"));
         dds.setPassword(p.getProperty("dbSelf.bi.jdbc.password"));
@@ -90,9 +91,10 @@ public class InitDataSource {
         try {
             for(String file:fileConfigs) {
                 if(file.startsWith("classpath*:")) {
-                    p.load(InitDataSource.class.getClassLoader().getResourceAsStream(file.substring(file.indexOf("classpath*:"))));
+                    String i = file.substring(11);
+                    p.load(InitDataSource.class.getClassLoader().getResourceAsStream(file.substring(11)));
                 } else if(file.startsWith("file:")) {
-                    InputStream in = new FileInputStream(file);
+                    InputStream in = new FileInputStream(file.substring(5));
                     p.load(in);
                 }
             }
