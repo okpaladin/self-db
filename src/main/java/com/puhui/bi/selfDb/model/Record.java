@@ -12,7 +12,7 @@ import java.util.*;
 public class Record implements Serializable {
     private static final long serialVersionUID = 427684513600884082L;
 
-    private  Map<String, Object> columns;
+    private  Map<String, Object> columns = new LinkedHashMap<>();
 
 
     void setColumnsMap(Map<String, Object> mapColumns) {
@@ -20,9 +20,6 @@ public class Record implements Serializable {
     }
 
     public Map<String, Object> getColumns() {
-
-        if(columns==null||columns.isEmpty())
-            this.columns =  new LinkedHashMap<String, Object>();
 
         return this.columns;
     }
@@ -77,6 +74,21 @@ public class Record implements Serializable {
         Object result = this.getColumns().get(column);
         return result != null?result:defaultValue;
     }
+
+    public Object getById(Integer id) {
+
+        int i = 0;
+        Object result =0 ;
+        for(java.util.Map.Entry<String,Object> entry:columns.entrySet()) {
+            if(id==i) {
+                result = entry.getValue()==null?"0":entry.getValue().toString();
+                break;
+            }
+            i++;
+        }
+        return result;
+    }
+
 
     public String toString() {
         StringBuilder sb = new StringBuilder();

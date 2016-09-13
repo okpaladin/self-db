@@ -32,7 +32,6 @@ public class RecordBuilder {
 
         while(rs.next()) {
             Record record = new Record();
-            Map columns = new LinkedHashMap<String, Object>();
 
             for(int i = 1; i <= columnCount; ++i) {
                 Object value;
@@ -47,14 +46,10 @@ public class RecordBuilder {
                 } else {
                     value = rs.getObject(i);
                 }
-//                columns.put(labelNames[i], value);
                 record.getColumns()
                         .put(labelNames[i], value);
-//                System.out.printf(record.getColumns().toString());
             }
-//            record.setColumnsMap(columns);
 
-//            columns = record.getColumns();
             result.add(record);
         }
 
