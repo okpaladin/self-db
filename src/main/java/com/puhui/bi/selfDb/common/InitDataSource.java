@@ -5,6 +5,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,7 +66,7 @@ public class InitDataSource {
     /**
      * 关闭数据源（DruidDataSource）
      */
-    private void close()  {
+    public void close()  {
         dds.close();
     }
 
@@ -94,8 +95,13 @@ public class InitDataSource {
                     String i = file.substring(11);
                     p.load(InitDataSource.class.getClassLoader().getResourceAsStream(file.substring(11)));
                 } else if(file.startsWith("file:")) {
-                    InputStream in = new FileInputStream(file.substring(5));
-                    p.load(in);
+                    File file1 = new File(file.substring(5));
+                    if(file1.exists()) {
+                        log.info("载入配置文件："+file1.toString());
+                        InputStream in = new FileInputStream(file1);
+                        p.load(in);
+                    }
+                    log.info("无配置文件载入:");
                 }
             }
         } catch (IOException e) {
